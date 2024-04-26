@@ -20,7 +20,7 @@ class Database implements DatabaseInterface
         $this->mysqli = $mysqli;
     }
 
-    public function buildQuery(string $query, array $arguments = []): string
+    public function buildQuery(string $query, array $args = []): string
     {
         $queryObject = new Query($query);
         if (self::ALLOW_SUB_CONDITION === false && $queryObject->haveSubCondition()) {
@@ -29,7 +29,7 @@ class Database implements DatabaseInterface
         $specifierCollection = new SpecifierCollection();
 
         $lexemeParser = new LexemeParser($specifierCollection->getMarkers());
-        $lexemes = $lexemeParser->get($queryObject, $arguments);
+        $lexemes = $lexemeParser->get($queryObject, $args);
         $queryObject->checkBlock($lexemes, $this->skip());
 
         $parameterMapper = new ParameterMapper();
